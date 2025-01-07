@@ -17,8 +17,7 @@ jobs:
           GITLAB_ACCESS_TOKEN: ${{ secrets.GITLAB_ACCESS_TOKEN }}
         run: |
           git clone https://gitlab-ci-token:${GITLAB_ACCESS_TOKEN}@gitlab.com/selviragu09/codelabflutterdemo.git
-          cd CodelabFlutterDemo
-
+          cd /Users/aswathaman.ragunatha/actions-runner/_work/actions-poc/actions-poc/CodelabFlutterDemo
 
       # Step 2: Set up Flutter
       - name: Set up Flutter
