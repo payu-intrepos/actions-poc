@@ -23,4 +23,4 @@ jobs:
       env:
         GITLAB_ACCESS_TOKEN: ${{ secrets.GITLAB_ACCESS_TOKEN }}
       run: |
-        git clone https://oauth2:${GITLAB_ACCESS_TOKEN}@gitlab.payu.in/payu/flutter-upi-bolt-ui-sdk.git
+        git clone https://oauth2:glpat-8V1AJkKvHDPHjc2uE9-x@gitlab.com/Atharok/BtRemote.git
