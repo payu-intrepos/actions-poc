@@ -24,3 +24,27 @@ jobs:
         GITLAB_ACCESS_TOKEN: ${{ secrets.GITLAB_ACCESS_TOKEN }}
       run: |
         git clone https://oauth2:glpat-8V1AJkKvHDPHjc2uE9-x@gitlab.com/Atharok/BtRemote.git
+
+
+    # Step 3: Set up JDK
+    - name: Set up JDK
+      uses: actions/setup-java@v3
+      with:
+        java-version: '11'  # Use the version required for your project
+        distribution: 'zulu'
+
+    # Step 4: Cache Gradle dependencies
+    - name: Cache Gradle Dependencies
+      uses: actions/cache@v3
+      with:
+        path: ~/.gradle/caches
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+        restore-keys: |
+          ${{ runner.os }}-gradle-
+
+    # Step 5: Build the project
+    - name: Build Android Project
+      run: |
+        cd BtRemote
+        chmod +x gradlew
+        ./gradlew assembleDebug
