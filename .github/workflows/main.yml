@@ -19,11 +19,14 @@ jobs:
           git clone https://gitlab-ci-token:${GITLAB_ACCESS_TOKEN}@gitlab.com/selviragu09/codelabflutterdemo.git
           cd CodelabFlutterDemo
 
+
       # Step 2: Set up Flutter
       - name: Set up Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: 'stable'
+        run: |
+          export PATH=/Users/aswathaman.ragunatha/WorkSpace/flutter/bin:$PATH
+          flutter channel stable
+          flutter upgrade
+          flutter doctor
 
       # Step 3: Install dependencies
       - name: Install Dependencies
