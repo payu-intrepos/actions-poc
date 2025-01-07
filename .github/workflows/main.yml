@@ -1,4 +1,4 @@
-name: Clone GitLab Repo
+name: Flutter CI/CD on macOS
 
 on:
   push:
@@ -6,45 +6,45 @@ on:
       - main
 
 jobs:
-  clone-gitlab-repo:
-    runs-on: ubuntu-latest
+  build-and-publish:
+    name: Build, Test, and Publish
+    runs-on: self-hosted  # Use the self-hosted runner (macOS)
 
     steps:
-    - name: Checkout GitHub Repository
-      uses: actions/checkout@v3
+      # Step 1: Clone GitLab Repository
+      - name: Clone GitLab Repository
+        env:
+          GITLAB_ACCESS_TOKEN: ${{ secrets.GITLAB_ACCESS_TOKEN }}
+        run: |
+          git clone https://gitlab-ci-token:${GITLAB_ACCESS_TOKEN}@gitlab.com/selviragu09/codelabflutterdemo.git
+          cd CodelabFlutterDemo
 
-    - name: Install Git
-      run: sudo apt-get update && sudo apt-get install -y git
+      # Step 2: Set up Flutter
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 'stable'
 
-    - name: Enable Debugging
-      run: export ACTIONS_STEP_DEBUG=true
-      
-    - name: Clone GitLab Repository
-      env:
-        GITLAB_ACCESS_TOKEN: ${{ secrets.GITLAB_ACCESS_TOKEN }}
-      run: |
-        git clone https://oauth2:glpat-8V1AJkKvHDPHjc2uE9-x@gitlab.com/Atharok/BtRemote.git
+      # Step 3: Install dependencies
+      - name: Install Dependencies
+        run: flutter pub get
 
+      # Step 4: Analyze the code
+      - name: Analyze Code
+        run: flutter analyze
 
-    # Step 3: Set up JDK
-    - name: Set up JDK
-      uses: actions/setup-java@v3
-      with:
-        java-version: '17'  # Use the version required for your project
-        distribution: 'zulu'
+      # Step 5: Run tests
+      - name: Run Tests
+        run: flutter test
 
-    # Step 4: Cache Gradle dependencies
-    - name: Cache Gradle Dependencies
-      uses: actions/cache@v3
-      with:
-        path: ~/.gradle/caches
-        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-        restore-keys: |
-          ${{ runner.os }}-gradle-
+      # Step 6: Validate the build
+      - name: Validate Build
+        run: flutter build android --debug
 
-    # Step 5: Build the project
-    - name: Build Android Project
-      run: |
-        cd BtRemote
-        chmod +x gradlew
-        ./gradlew assembleDebug
+      # Step 7: Publish to Dart
+      - name: Publish to Dart
+        env:
+          PUB_TOKEN: ${{ secrets.PUB_TOKEN }}
+        run: |
+          echo $PUB_TOKEN > ~/.pub-cache/credentials.json
+          flutter pub publish --force
