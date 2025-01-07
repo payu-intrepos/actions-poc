@@ -30,7 +30,7 @@ jobs:
     - name: Set up JDK
       uses: actions/setup-java@v3
       with:
-        java-version: '11'  # Use the version required for your project
+        java-version: '17'  # Use the version required for your project
         distribution: 'zulu'
 
     # Step 4: Cache Gradle dependencies
