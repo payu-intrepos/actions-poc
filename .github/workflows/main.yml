@@ -34,20 +34,27 @@ jobs:
 
       # Step 4: Analyze the code
       - name: Analyze Code
-        run: flutter analyze
+        run: |
+          cd /Users/aswathaman.ragunatha/actions-runner/_work/actions-poc/actions-poc/CodelabFlutterDemo
+          flutter analyze
 
       # Step 5: Run tests
       - name: Run Tests
-        run: flutter test
+        run: |
+          cd /Users/aswathaman.ragunatha/actions-runner/_work/actions-poc/actions-poc/CodelabFlutterDemo
+          flutter test
 
       # Step 6: Validate the build
       - name: Validate Build
-        run: flutter build android --debug
+        run: | 
+          cd /Users/aswathaman.ragunatha/actions-runner/_work/actions-poc/actions-poc/CodelabFlutterDemo
+          flutter build android --debug
 
       # Step 7: Publish to Dart
       - name: Publish to Dart
         env:
           PUB_TOKEN: ${{ secrets.PUB_TOKEN }}
         run: |
+          cd /Users/aswathaman.ragunatha/actions-runner/_work/actions-poc/actions-poc/CodelabFlutterDemo
           echo $PUB_TOKEN > ~/.pub-cache/credentials.json
           flutter pub publish --force
