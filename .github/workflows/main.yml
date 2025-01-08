@@ -16,7 +16,7 @@ jobs:
         env:
           GITLAB_ACCESS_TOKEN: ${{ secrets.GITLAB_ACCESS_TOKEN }}
         run: |
-          git clone https://gitlab-ci-token:${GITLAB_ACCESS_TOKEN}@gitlab.payu.in/payu/one-payu-base-sdk-android.git
+          git clone https://gitlab-ci-token:${GITLAB_ACCESS_TOKEN}@gitlab.com/selviragu09/codelabflutterdemo.git
 
       # Step 2: Set up Flutter
       - name: Set up Flutter
@@ -29,25 +29,25 @@ jobs:
       # Step 3: Install dependencies
       - name: Install Dependencies
         run: |
-          cd /Users/aswathaman.ragunatha/actions-runner/_work/actions-poc/actions-poc/one-payu-base-sdk-android
+          cd /Users/aswathaman.ragunatha/actions-runner/_work/actions-poc/actions-poc/CodelabFlutterDemo
           flutter pub get
 
       # Step 4: Analyze the code
       - name: Analyze Code
         run: |
-          cd /Users/aswathaman.ragunatha/actions-runner/_work/actions-poc/actions-poc/one-payu-base-sdk-android
+          cd /Users/aswathaman.ragunatha/actions-runner/_work/actions-poc/actions-poc/CodelabFlutterDemo
           flutter analyze
 
       # Step 5: Run tests
       - name: Run Tests
         run: |
-          cd /Users/aswathaman.ragunatha/actions-runner/_work/actions-poc/actions-poc/one-payu-base-sdk-android
+          cd /Users/aswathaman.ragunatha/actions-runner/_work/actions-poc/actions-poc/CodelabFlutterDemo
           flutter test
 
       # Step 6: Validate the build
       - name: Validate Build
         run: | 
-          cd /Users/aswathaman.ragunatha/actions-runner/_work/actions-poc/actions-poc/one-payu-base-sdk-android
+          cd /Users/aswathaman.ragunatha/actions-runner/_work/actions-poc/actions-poc/CodelabFlutterDemo
           flutter build apk --debug -t lib/namer_app.dart
 
       # Step 7: Publish to Dart
